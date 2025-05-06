@@ -8,6 +8,7 @@ const createUser = async (req, res) => {
   try {
     const { email, address, phone_num, RFC, ...rest } = req.body;
 
+    // Realiza las operaciones como hash, cifrado, etc.
     const hashedEmail = hashEmail(email.toLowerCase());
     const encryptedAddress = encrypt(address);
     const encryptedPhone = encrypt(phone_num);
@@ -28,6 +29,7 @@ const createUser = async (req, res) => {
   }
 };
 
+
 const viewAllUsers = async (req, res) => {
   try {
     const users = await ModelUsers.viewAll();
@@ -40,6 +42,8 @@ const viewAllUsers = async (req, res) => {
     }));
 
     res.status(200).json(decryptedUsers);
+    console.log('Usuarios obtenidos:', decryptedUsers);
+    
   } catch (error) {
     console.error('Error al obtener los usuarios:', error);
     res.status(400).json({ message: 'Error al obtener usuarios', error });
