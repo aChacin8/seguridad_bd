@@ -1,15 +1,13 @@
 const bcrypt = require('bcrypt');
-const ModelUsers = require('../models/usersModel');
+const ModelUsers = require('../models/Users');
 const { hashEmail } = require('../utils/hash');
 const { encrypt, decrypt } = require('../utils/crypto');
 
-const SALT_ROUNDS = 10;
 
 const createUser = async (req, res) => {
   try {
-    const { password, email, address, phone_num, RFC, ...rest } = req.body;
+    const { email, address, phone_num, RFC, ...rest } = req.body;
 
-    const hashPassword = await bcrypt.hash(password, SALT_ROUNDS);
     const hashedEmail = hashEmail(email.toLowerCase());
     const encryptedAddress = encrypt(address);
     const encryptedPhone = encrypt(phone_num);
@@ -20,7 +18,6 @@ const createUser = async (req, res) => {
       address: encryptedAddress,
       phone_num: encryptedPhone,
       email: hashedEmail,
-      password: hashPassword,
       RFC: encryptedRFC,
     });
 
@@ -39,8 +36,7 @@ const viewAllUsers = async (req, res) => {
       address: decrypt(user.address),
       phone_num: decrypt(user.phone_num),
       RFC: decrypt(user.RFC),
-      password: undefined, // No se expone
-      email: undefined, // Hasheado, no se puede revertir
+      email: hashEmail, // Hasheado, no se puede revertir
     }));
 
     res.status(200).json(decryptedUsers);
