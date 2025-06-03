@@ -13,7 +13,6 @@ exports.up = function(knex) {
             table.string('address')
             table.string('phone_num')
             table.string('email').notNullable().unique()
-            table.string('password').notNullable()
             table.string('RFC').notNullable()
             table.boolean('active').defaultTo(true)
             table.timestamp('created_at').defaultTo(knex.fn.now())

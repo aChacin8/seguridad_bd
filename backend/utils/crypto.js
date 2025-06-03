@@ -21,4 +21,8 @@ function decrypt(encryptedText) {
   return decrypted.toString('utf8');
 }
 
+<<<<<<< HEAD:backend/utils/crypto.js
 module.exports = { encrypt, decrypt };
+=======
+module.exports = { encrypt, decrypt };
+>>>>>>> 3062bf16990ab3820872015072ed1422121cb763:utils/crypto.js
