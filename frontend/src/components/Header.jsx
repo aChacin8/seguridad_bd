@@ -12,12 +12,12 @@ const Header = () => {
     return (
         <Navbar  className='navbar'>
             <Container>
-                <Navbar.Brand href='/'><img src="" alt="Logo" className='navbar__logo'/></Navbar.Brand>
+                <Navbar.Brand href='/'><img src="*" alt="Logo" className='navbar__logo'/></Navbar.Brand>
                 <Nav className='navbar__nav'>
                     {isAuth ? (
                         <>
-                            <NavLink to='/calendario' className={({isActive})=> linkIsActive(isActive)}>Recordatorios</NavLink>
-                            <NavLink to='/eventos' className={({isActive})=> linkIsActive(isActive)}>Mis eventos</NavLink>
+                            <NavLink to='/subasta' className={({isActive})=> linkIsActive(isActive)}>Recordatorios</NavLink>
+                            {/* <NavLink to='/eventos' className={({isActive})=> linkIsActive(isActive)}>Mis eventos</NavLink> */}
                             <NavLink to='/perfil' className={({isActive})=> linkIsActive(isActive)}>Perfil</NavLink>
                             <NavLink to='/' onClick={logout} className={({isActive})=> linkIsActive(isActive)}>Cerrar Sesion</NavLink>
                         </>

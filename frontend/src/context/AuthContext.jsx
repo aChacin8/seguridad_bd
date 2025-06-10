@@ -42,7 +42,7 @@
             const fetchToken = async () => {
             if (!token) return; // Si no hay token, no hacer la solicitud
                 try {
-                    const response = await fetch(`${API_URL}/taskly/verify-token`, {
+                    const response = await fetch(`${API_URL}/api/verify-token`, {
                         method: 'GET',
                         headers: {
                             'Content-Type': 'application/json',
