@@ -35,6 +35,7 @@ const findById = async (req, res) => {
             ...user, 
             address: decrypt(user.address),
             phone_num: decrypt(user.phone_num),
+            rfc: decrypt(user.rfc)
         }
         res.status(200).json(decryptedUser);
     } catch (error) {

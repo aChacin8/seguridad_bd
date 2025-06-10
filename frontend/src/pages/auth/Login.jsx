@@ -14,7 +14,7 @@ const Login = () => {
 
     const onSubmit = async (data) => {
         try {
-            const response = await fetch (`${API_URL}/taskly/login`, {
+            const response = await fetch (`${API_URL}/api/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -30,7 +30,7 @@ const Login = () => {
                 login(result.token);
                 alert('Usuario autenticado con éxito');
                 console.log('Usuario autenticado');
-                navigate('/calendario'); // Redirige al usuario a la página de calendario                
+                navigate('/subasta'); // Redirige al usuario a la página de calendario                
             } else {
                 console.error("Token inválido o ausente:", result);
             }

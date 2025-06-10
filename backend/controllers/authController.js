@@ -7,13 +7,14 @@ const { hashEmail, hashToken } = require('../utils/hash') // Importa la función
 const { encrypt, decrypt } = require('../utils/crypto');
 
 const registerUser = async (req, res) => {
+    console.log("BODY:", req.body); // Verifica el cuerpo recibido
     try {
-        const { password, email, address, phone_num, ...rest } = req.body
+        const { password, email, address, phone_num, rfc, ...rest } = req.body
         const hashPassword = await bcrypt.hash(password, 10)
         const hashedEmail = hashEmail(email.toLowerCase());
         const encryptedAddress = encrypt(address);
         const encryptedPhone = encrypt(phone_num);
-        const encryptedRFC = encrypt(RFC);
+        const encryptedRFC = encrypt(rfc);
 
         const token = jwt.sign(
             {
@@ -22,7 +23,7 @@ const registerUser = async (req, res) => {
             SECRET_KEY,
             { expiresIn: '8h' }
         );
-        const hashedToken = hashToken(token); // Encripta el token
+        const hashedToken = hashToken(token);
 
         // Crea el usuario con los datos encriptados y hasheados
         const user = await ModelUsers.createUser(
@@ -32,7 +33,7 @@ const registerUser = async (req, res) => {
                 phone_num: encryptedPhone,
                 email: hashedEmail,
                 password: hashPassword,
-                RFC: encryptedRFC,
+                rfc: encryptedRFC,
                 token: hashedToken, // Almacena el token en la base de datos
                 active: true // Asegúrate de que el usuario esté activo al registrarse 
             })// Crear el usuario
