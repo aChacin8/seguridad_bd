@@ -5,7 +5,6 @@ const secretKey = crypto.scryptSync(process.env.CRYPTO_KEY || 'clave-secreta', '
 const ivLength = 12; // Longitud del vector de inicialización (IV) para aes-256-gcm
 
 const encrypt = (text) => {
-  
     const iv = crypto.randomBytes(ivLength);
     const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
     

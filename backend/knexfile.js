@@ -17,10 +17,10 @@ module.exports = {
       max: 10
     },
     migrations: {
-      tableName: 'knex_migrations' // Se indica la tabla donde se guardaran las migraciones
+      tableName: 'knex_migrations' 
     },
     seeds:{
-      directory: './data/seeds' // Se indica la ruta donde se encuentran los seeds
+      directory: './data/seeds' 
     }
   },
 

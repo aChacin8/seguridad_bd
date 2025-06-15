@@ -151,8 +151,21 @@ const SingUp = () => {
                                 id='signup__password'
                                 placeholder='Ingresa una Contraseña'
                                 required
-                                {...register('password', { required: true })}
+                                {...register('password',
+                                    {
+                                        required: 'La contraseña es requerida',
+                                        pattern: {
+                                            value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*()_+\[\]{};':"\\|,.<>\/?`~\-])[A-Za-z\d!@#$%^&*()_+\[\]{};':"\\|,.<>\/?`~\-]{8,}$/,
+                                            message: 'La contraseña no cumple con los requisitos'
+                                        }
+                                    })}
                             />
+                            <ul style={{ fontSize: '0.8rem', color: 'gray', marginTop: '1rem' }}>
+                                <li>Debe tener al menos 8 caracteres</li>
+                                <li>Debe contener al menos una letra</li>
+                                <li>Debe contener al menos un número</li>
+                                <li>Debe contener al menos un caracter especial</li>
+                            </ul>
                             <p>{errors.password?.message}</p>
                         </Form.Group>
 

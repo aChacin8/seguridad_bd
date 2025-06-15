@@ -23,6 +23,11 @@ const viewAllUsers = (req, res) => {
 }
 
 const findById = async (req, res) => {
+    console.log('Buscando usuario por ID:', req.params.idUsers);
+    console.log('Parámetros recibidos:', req.params);
+    console.log('Cuerpo de la solicitud:', req.body);
+    
+    
     try {
         const { idUsers } = req.params;
         const user = await ModelUsers.findById(idUsers);
@@ -40,7 +45,7 @@ const findById = async (req, res) => {
         res.status(200).json(decryptedUser);
     } catch (error) {
         res.status(400).json({ message: 'Error al encontrar el usuario', error });
-        console.log('Error en findById:', error);   
+        console.log('Error en el contralador findById:', error);   
     }
 };
 
