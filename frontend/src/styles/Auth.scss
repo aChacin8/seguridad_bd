@@ -17,9 +17,22 @@ $border: rgb(67, 135, 224);
         display: flex;
     }
 
-    &__name-first, &__location {
+    &__name-first, &__location{
         margin-left: -1rem;
         width: 120%;
+    }
+
+    &__rfc {
+        margin-left: -1rem;
+        margin-right: 1.5rem;
+        width: 110%;
+    }
+
+    &__birthday{
+        margin-left: 0.4rem;
+        margin-right: 1rem;
+        width: 108%;
+
     }
 
     &__gender {
@@ -33,7 +46,7 @@ $border: rgb(67, 135, 224);
         justify-self: center;
     }
 
-    &__name-first, &__name-last, &__location, &__phone, &__password, &__email{
+    &__name-first, &__name-last, &__location, &__phone, &__password, &__email, &__rfc, &__birthday  {
         border-color: $border;
     }
     
