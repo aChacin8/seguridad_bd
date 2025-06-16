@@ -16,10 +16,10 @@ const viewAll = () => {
 };
 
 const findById = (idUsers) => {
-  return knex('users')
-    .select('*')
-    .where('id_users', idUsers)
-};
+    return knex ('users')
+        .where('id_users', idUsers)
+        .first()
+}
 
 const findEmail = (email) => {
     const hashedEmail = hashEmail(email); 
