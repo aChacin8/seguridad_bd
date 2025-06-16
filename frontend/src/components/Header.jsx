@@ -16,7 +16,7 @@ const Header = () => {
                 <Nav className='navbar__nav'>
                     {isAuth ? (
                         <>
-                            <NavLink to='/subasta' className={({isActive})=> linkIsActive(isActive)}>Recordatorios</NavLink>
+                            <NavLink to='/subasta' className={({isActive})=> linkIsActive(isActive)}>Subastas</NavLink>
                             {/* <NavLink to='/eventos' className={({isActive})=> linkIsActive(isActive)}>Mis eventos</NavLink> */}
                             <NavLink to='/perfil' className={({isActive})=> linkIsActive(isActive)}>Perfil</NavLink>
                             <NavLink to='/' onClick={logout} className={({isActive})=> linkIsActive(isActive)}>Cerrar Sesion</NavLink>
