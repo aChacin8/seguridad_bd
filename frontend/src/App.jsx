@@ -8,13 +8,11 @@ function App() {
 
   return (
     <>
-    
     <AuthProvider>
         <BrowserRouter>
           <RoutesIndex/>
         </BrowserRouter>
     </AuthProvider>
-      
     </>
       
   )
