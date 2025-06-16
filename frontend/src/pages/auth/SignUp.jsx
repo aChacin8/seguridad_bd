@@ -72,13 +72,12 @@ const SingUp = () => {
                             </Form.Group>
                         </Form.Group>
                         <Form.Group className='mt-3' id='signup__form-div'>
-
-                            <Form.Group className='mb-3' id='signup__form-name'>
+                            <Form.Group className='mb-3' id='signup__form-address'>
                                 <Form.Label className='m-3'>RFC:</Form.Label>
                                 <Form.Control
                                     type='text'
                                     id='signup__rfc'
-                                    className='m-3'
+                                    className='mt-3'
                                     name='rfc'
                                     placeholder='Ingresa tu RFC'
                                     required
@@ -86,17 +85,18 @@ const SingUp = () => {
                                 />
                                 <p>{errors.rfc?.message}</p>
                             </Form.Group>
-                            <Form.Group className='mb-3' id='signup__form-name'>
+                            <Form.Group className='mb-3' id='signup__form-address'>
                                 <Form.Label className='m-3'>Cumpleaños:</Form.Label>
                                 <Form.Control
                                     type='text'
                                     id='signup__birthday'
-                                    className='m-3'
+                                    className='mt-3'
                                     name='birthday'
                                     placeholder='Ingresa tu cumpleaños'
                                     required
                                     {...register('birthday', { required: true })}
                                 />
+                                <p style={{ fontSize: '0.8rem', color: 'gray', marginTop: '1rem' }}>Formato del cumpleaños: AAAA-MM-DD</p>
                                 <p>{errors.rfc?.message}</p>
                             </Form.Group>
                         </Form.Group>
@@ -147,7 +147,6 @@ const SingUp = () => {
                             <Form.Control
                                 type='password'
                                 name='password'
-                                pattern='^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$' // Al menos 8 caracteres, al menos una letra y un número
                                 id='signup__password'
                                 placeholder='Ingresa una Contraseña'
                                 required
