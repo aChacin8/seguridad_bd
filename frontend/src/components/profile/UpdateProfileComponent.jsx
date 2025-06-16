@@ -44,7 +44,7 @@ const UpdateProfileComponent = () => {
     // Enviar actualización al backend
     const updateUserById = async () => {
         try {
-            const response = await fetch(`${API_URL}/taskly/users/${selectedUser.id_users}`, {
+            const response = await fetch(`${API_URL}/api/users/${selectedUser.id_users}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -57,7 +57,8 @@ const UpdateProfileComponent = () => {
 
             if (response.ok) {
                 alert('Usuario actualizado correctamente');
-                setUserData(result); // Recarga el contexto con los datos nuevos
+                window.location.reload(); 
+                setUserData(result); 
                 setShowModal(false);
             } else {
                 console.error("Error al actualizar usuario:", result);
