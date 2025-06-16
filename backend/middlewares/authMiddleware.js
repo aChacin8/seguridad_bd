@@ -3,7 +3,7 @@
     const ModelUsers = require('../models/Users'); // Importa el modelo de usuarios
 
     const verifyToken = async (req, res, next) => {
-        authHeader = req.headers['authorization'];
+        const authHeader = req.headers['authorization'];
         const token = authHeader && authHeader.split(' ')[1]; // Extrae el token del encabezado de autorización
         
         if(!token) {
