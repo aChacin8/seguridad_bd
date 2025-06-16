@@ -23,35 +23,32 @@ const viewAllUsers = (req, res) => {
 }
 
 const findById = async (req, res) => {
-    console.log('Buscando usuario por ID:', req.params.idUsers);
-    console.log('Parámetros recibidos:', req.params);
-    console.log('Cuerpo de la solicitud:', req.body);
-    
-    
+
     try {
         const { idUsers } = req.params;
         const user = await ModelUsers.findById(idUsers);
+        console.log(user);
 
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
         }
 
         const decryptedUser = {
-            ...user, 
+            ...user,
             address: decrypt(user.address),
             phone_num: decrypt(user.phone_num),
-            rfc: decrypt(user.rfc)
+            rfc: decrypt(user.RFC)
         }
         res.status(200).json(decryptedUser);
     } catch (error) {
         res.status(400).json({ message: 'Error al encontrar el usuario', error });
-        console.log('Error en el contralador findById:', error);   
+        console.log('Error en el contralador findById:', error);
     }
 };
 
-const updateUser = async (req,res) => {
+const updateUser = async (req, res) => {
     const { idUsers } = req.params;
-    const { first_name, last_name, address, phone_num } = req.body;
+    const { address, phone_num, rfc, ...rest } = req.body; // rest puede incluir first_name, last_name, birthday, etc.
 
     try {
         const user = await ModelUsers.findById(idUsers);
@@ -61,41 +58,39 @@ const updateUser = async (req,res) => {
 
         console.log('Usuario antes de actualizar:', user);
 
-        const encryptedAddress = encrypt(address);
-        const encryptedPhone = encrypt(phone_num);
-        const encryotedRFC = encrypt(RFC)
+        const encryptedAddress = address ? encrypt(address) : undefined;
+        const encryptedPhone = phone_num ? encrypt(phone_num) : undefined;
+        const encryptedRFC = rfc ? encrypt(rfc) : undefined;
 
-        console.log('Datos cifrados a actualizar:', { 
-            first_name, 
-            last_name, 
-            address: encryptedAddress, 
-            phone_num: encryptedPhone,
-            RFC: encryotedRFC
-        });
+        const dataToUpdate = {
+            ...rest,
+            ...(encryptedAddress && { address: encryptedAddress }),
+            ...(encryptedPhone && { phone_num: encryptedPhone }),
+            ...(encryptedRFC && { rfc: encryptedRFC }),
+        };
 
-        const updatedUser = await ModelUsers.updateUser(idUsers, {
-            first_name,
-            last_name,
-            address: encryptedAddress,
-            phone_num: encryptedPhone,
-            RFC: encryotedRFC
-        });
+        console.log('Datos cifrados a actualizar:', dataToUpdate);
+
+        const updatedUser = await ModelUsers.updateUser(idUsers, dataToUpdate);
 
         console.log('Usuario actualizado en BD:', updatedUser);
 
-        const {created_at, ...dataToUpdate} = {
+        const decryptedUser = {
             ...updatedUser,
-            address: decrypt(updatedUser.address),
-            phone_num: decrypt(updatedUser.phone_num),
-            RFC: decrypt(updateUser.RFC)
+            address: updatedUser.address ? decrypt(updatedUser.address) : null,
+            phone_num: updatedUser.phone_num ? decrypt(updatedUser.phone_num) : null,
+            rfc: updatedUser.rfc ? decrypt(updatedUser.rfc) : null,
         };
 
-        return res.status(200).json(dataToUpdate);
+        const { created_at, password, token, ...userSafe } = decryptedUser;
+
+        return res.status(200).json(userSafe);
     } catch (error) {
         console.error('Error en updateUser:', error);
         return res.status(400).json({ message: 'Error al actualizar el usuario', error });
     }
 };
+
 
 module.exports = {
     createUser,
