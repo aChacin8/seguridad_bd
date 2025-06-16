@@ -15,15 +15,6 @@ const registerUser = async (req, res) => {
         const encryptedPhone = encrypt(phone_num);
         const encryptedRFC = encrypt(rfc);
 
-        const token = jwt.sign(
-            {
-                email: hashedEmail
-            },
-            SECRET_KEY,
-            { expiresIn: '8h' }
-        );
-        const hashedToken = hashToken(token);
-
         const user = await ModelUsers.createUser(
             {
                 ...rest,
@@ -32,7 +23,6 @@ const registerUser = async (req, res) => {
                 email: hashedEmail,
                 password: hashPassword,
                 rfc: encryptedRFC,
-                token: hashedToken, 
                 active: true 
             })
         res.status(201).json(user)
@@ -70,6 +60,7 @@ const loginUser = async (req, res) => {
 
         const decryptedAddress = user.address ? decrypt(user.address) : '';
         const decryptedPhone = user.phone_num ? decrypt(user.phone_num) : '';
+        const decryptedRFC = user.rfc ? decrypt (user.rfc) : '';
 
         // Enviar respuesta al frontend
         res.status(200).json({
@@ -78,7 +69,8 @@ const loginUser = async (req, res) => {
             first_name: user.first_name,
             last_name: user.last_name,
             address: decryptedAddress,
-            phone_num: decryptedPhone
+            phone_num: decryptedPhone,
+            rfc: decryptedRFC
         });
 
     } catch (error) {
