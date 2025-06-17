@@ -81,8 +81,16 @@ const SingUp = () => {
                                     name='rfc'
                                     placeholder='Ingresa tu RFC'
                                     required
-                                    {...register('rfc', { required: true })}
+                                    {...register('rfc', 
+                                        {
+                                            pattern: {
+                                                value: /^([A-ZÑ&]{3,4})\d{6}[A-Z0-9]{3}$/,
+                                                message: 'El RFC no tiene un fomato valido'
+                                        }
+                                    })}
                                 />
+                                <p style={{ fontSize: '0.8rem', color: 'gray', marginTop: '1rem' }}>El RFC debe tener al menos 13 digitos</p>
+
                                 <p>{errors.rfc?.message}</p>
                             </Form.Group>
                             <Form.Group className='mb-3' id='signup__form-address'>
