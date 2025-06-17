@@ -8,10 +8,9 @@ const Auction = () => {
         <>
             <Header/>
             <div className="auction">
-                <h1>Auction Page</h1>
-                <p>Welcome to the auction page. Here you can view and participate in auctions.</p>
+                <h1>RacketBid</h1>
+                <p>En esta pagina podras participar en las subastas.</p>
                 <div className='auction__card'>
-                    <AuctionComponent/>
                     <AuctionComponent/>
                 </div>
             </div>

@@ -1,18 +1,58 @@
-import {Card, Button} from 'react-bootstrap';
-import '@/styles/Auction.scss'
-    
+import React, { useEffect, useState } from 'react';
+import { Card, Button, Spinner, Alert } from 'react-bootstrap';
+import '@/styles/Auction.scss';
+
+const API_URL = import.meta.env.VITE_API_URL; // URL de la API desde el archivo .env
+
+
 const AuctionComponent = () => {
-    return  (
-        <>
-            <Card className='auction__card'>
-                <Card.Body>
-                    <Card.Title>Subastas En linea</Card.Title>
-                    <Card.Text>Contenido</Card.Text>
-                    <Button>Participar</Button>
-                </Card.Body>
-            </Card>
-        </>
-    )
-}
+  const [auctions, setAuctions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch(`${API_URL}/auctions`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Error al obtener subastas');
+        return res.json();
+      })
+      .then((data) => {
+        setAuctions(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <Spinner animation="border" />;
+  if (error) return <Alert variant="danger">{error}</Alert>;
+
+  return (
+    <div className="auction-list">
+      {auctions.length === 0 && <p>No hay subastas activas.</p>}
+
+      {auctions.map((auction) => (
+        <Card className="auction__card" key={auction.id_auctions} style={{ marginBottom: '1rem' }}>
+          <Card.Body>
+            <Card.Title>{auction.title}</Card.Title>
+            <Card.Text>{auction.description}</Card.Text>
+            <Card.Img src={auction.imageUrl || 'url_por_defecto'} alt={auction.title} />
+            <Card.Text>
+              <strong>Precio inicial:</strong> ${auction.start_price}
+            </Card.Text>
+            <Card.Text>
+              <strong>Precio actual:</strong> ${auction.current_price}
+            </Card.Text>
+            <Button variant="primary" onClick={() => alert(`Participar en ${auction.title}`)}>
+              Participar
+            </Button>
+          </Card.Body>
+        </Card>
+      ))}
+    </div>
+  );
+};
 
 export default AuctionComponent;

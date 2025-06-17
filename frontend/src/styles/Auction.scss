@@ -1,9 +1,10 @@
 .auction {
-    padding: 2rem;
-    
+    padding: 2rem;    
     &__card{
         display: flex;
+        flex-wrap: wrap;
         margin: auto;
         margin-top: 2rem;
+        margin-left: 6rem;
     }
 }
