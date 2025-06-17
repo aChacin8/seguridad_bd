@@ -12,7 +12,7 @@ exports.seed = async function(knex) {
     },
     {
       id_auctions: 2, // Louis Vuitton x Tyler the Creator
-      url: 'https://assets.vogue.com/photos/65efab7998a67f4742fe1435/master/pass/00-story-Louis-Vuitton-Tyler-the-Creator-Shoes.jpg'
+      url: 'https://images.stockx.com/images/Louis-Vuitton-by-Tyler-the-Creator-White-Mocha-Product.jpg?fit=fill&bg=FFFFFF&w=700&h=500&fm=webp&auto=compress&q=90&dpr=2&trim=color&updated_at=1738193358'
     },
     {
       id_auctions: 3, // Air Jordan 1 Off White Chicago
