@@ -23,4 +23,20 @@
     &__components {
         margin-top: 15rem;
     }
+
+    @media (max-width: 768px) {
+        &__components {
+            margin-top: 6rem;
+            padding: 0.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        &__components {
+            margin-top: 4rem;
+            width: 95%;
+            padding: 0.5rem;
+            font-size: 0.9rem;
+        }
+    }
 }
