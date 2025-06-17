@@ -38,7 +38,7 @@ const AuctionComponent = () => {
           <Card.Body>
             <Card.Title>{auction.title}</Card.Title>
             <Card.Text>{auction.description}</Card.Text>
-            <Card.Img src={auction.imageUrl || 'url_por_defecto'} alt={auction.title} />
+            <Card.Img src={auction.url } alt={auction.title} style={{width: '20%'}}/>
             <Card.Text>
               <strong>Precio inicial:</strong> ${auction.start_price}
             </Card.Text>
