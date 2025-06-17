@@ -5,6 +5,7 @@ import Home from '@/pages/home/Home';
 import Login from '@/pages/auth/Login';
 import Auction from '@/pages/auction/Auction';
 import Profile from '@/pages/profile/Profile';
+import AdminLoginPage from '../pages/auth/AdminLoginPage';
 
 const RoutesIndex = () => {
     const {isAuth} = useAuthContext(); // Consumir el contexto de autenticación
@@ -15,6 +16,7 @@ const RoutesIndex = () => {
             <Route path='/Login' element = {<Login/>}/>
             <Route path='/subasta' element = {isAuth ? <Auction/> : <Login/>}/>
             <Route path='/perfil' element = {isAuth ? <Profile/> : <Login/>}/>
+            <Route path='/admin/login' element= {<AdminLoginPage/>}/>
         </Routes>   
     );
 }
