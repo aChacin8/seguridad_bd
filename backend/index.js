@@ -1,6 +1,8 @@
 process.loadEnvFile() // Carga las varibles de entorno del archivo .env
 
 const userRoutes = require('./routes/userRoutes')
+const auctionRoutes = require('./routes/auctionRoutes')
+const adminRoutes = require('./routes/adminRotes')
 
 const express = require('express')
 const cors = require('cors')
@@ -17,6 +19,8 @@ app.use((req, res, next) => {
   next();
 });
 app.use('/api', userRoutes) //Rutas de la API usuarios
+app.use('/auctions', auctionRoutes )
+app.use('/api/admin', adminRoutes)
 
 
 server.listen(port, () => {
