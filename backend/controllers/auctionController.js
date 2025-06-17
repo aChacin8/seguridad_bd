@@ -1,13 +1,31 @@
 const Auction = require('../models/Auctions');
 
-const getAuctions = async (req, res) => {
+const knex = require('../config'); 
+
+const getAllAuctions = async (req, res) => {
   try {
-    const auctions = await Auction.getAllAuctions();
-    res.json(auctions);
+    const auctions = await knex('auctions')
+      .leftJoin('img_auctions', 'auctions.id_auctions', 'img_auctions.id_auctions')
+      .select(
+        'auctions.id_auctions',
+        'auctions.title',
+        'auctions.description',
+        'auctions.start_price',
+        'auctions.current_price',
+        'auctions.status',
+        'auctions.star_time',
+        'auctions.end_time',
+        'auctions.active',
+        'img_auctions.url'
+      );
+
+    res.status(200).json(auctions);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener subastas' });
+    console.error('Error al obtener subastas:', error);
+    res.status(500).json({ message: 'Error al obtener subastas', error });
   }
 };
+
 
 const getAuction = async (req, res) => {
   const id = req.params.id;
@@ -54,7 +72,7 @@ const deleteAuction = async (req, res) => {
 };
 
 module.exports = {
-  getAuctions,
+  getAllAuctions,
   getAuction,
   createAuction,
   updateAuction,
