@@ -1,29 +1,38 @@
-process.loadEnvFile() // Carga las varibles de entorno del archivo .env
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const http = require('http');
+const auctionSocket = require('./services/auctionSocket'); // Asegúrate de la ruta correcta
 
-const userRoutes = require('./routes/userRoutes')
-const auctionRoutes = require('./routes/auctionRoutes')
-const adminRoutes = require('./routes/adminRotes')
+const userRoutes = require('./routes/userRoutes');
+const auctionRoutes = require('./routes/auctionRoutes');
+const adminRoutes = require('./routes/adminRotes');
+const bidsRoutes = require('./routes/bidsRoutes');
 
-const express = require('express')
-const cors = require('cors')
-const http = require ('http')
+const app = express();
+const server = http.createServer(app);
+const port = process.env.PORT || 3000;
 
-const app = express()
-const server = http.createServer(app) // 
-const port = process.env.PORT || 3000
-
-app.use(cors()) // Permite el acceso a la API desde cualquier origen
-app.use(express.json()) //Maneja el body de las peticiones en formato JSON
+app.use(cors());
+app.use(express.json());
 app.use((req, res, next) => {
   res.setHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; object-src 'none'");
   next();
 });
-app.use('/api', userRoutes) //Rutas de la API usuarios
-app.use('/auctions', auctionRoutes )
-app.use('/api/admin', adminRoutes)
 
+app.use('/api', userRoutes);
+app.use('/api', auctionRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/auctions', bidsRoutes);
 
+const { Server } = require('socket.io');
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:5173',
+    methods: ['GET', 'POST']
+  }
+});
+auctionSocket(io); 
 server.listen(port, () => {
-  console.log(`Server is running on port ${port}`) //Se imprime el puerto en el que corre el servidor
-  console.log(`http://localhost:${port}`) 
-})
+  console.log(`✅ Servidor corriendo en http://localhost:${port}`);
+});
