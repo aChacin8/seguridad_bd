@@ -13,7 +13,7 @@ const getAllAuctions = async (req, res) => {
         'auctions.start_price',
         'auctions.current_price',
         'auctions.status',
-        'auctions.star_time',
+        'auctions.start_time',
         'auctions.end_time',
         'auctions.active',
         'img_auctions.url'
@@ -30,9 +30,25 @@ const getAllAuctions = async (req, res) => {
 const getAuction = async (req, res) => {
   const id = req.params.id;
   try {
-    const auction = await Auction.getAuctionById(id);
-    if (!auction) return res.status(404).json({ error: 'Subasta no encontrada' });
-    res.json(auction);
+    const auction = await knex ('auctions')
+      .leftJoin('img_auctions', 'auctions.id_auctions', 'img_auctions.id_auctions')
+      .select (
+        'auctions.id_auctions',
+        'auctions.title',
+        'auctions.description',
+        'auctions.start_price',
+        'auctions.current_price',
+        'auctions.status',
+        'auctions.start_time',
+        'auctions.end_time',
+        'auctions.active',
+        'img_auctions.url'
+      )
+      .where ('auctions.id_auctions', id)
+      .first();
+      
+      if (!auction || !auction.active) return res.status(404).json({ error: 'Subasta no encontrada' });
+      res.json(auction)
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener subasta' });
   }
@@ -70,6 +86,7 @@ const deleteAuction = async (req, res) => {
     res.status(500).json({ error: 'Error al eliminar subasta' });
   }
 };
+
 
 module.exports = {
   getAllAuctions,
