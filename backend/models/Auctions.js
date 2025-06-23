@@ -20,10 +20,29 @@ const deleteAuction = (id) => {
   return knex('auctions').where('id_auctions', id).del();
 };
 
+const updateCurrentPrice = (id, price) => {
+  return knex('auctions')
+    .where({ id_auctions: id })
+    .update({ current_price: price });
+};
+
+const finishAuction = (id, winner) => {
+  return knex('auctions')
+    .where({ id_auctions: id })
+    .update({
+      active: false,
+      status: 'ended',
+      winner,
+      end_time: knex.fn.now(),
+    });
+};
+
 module.exports = {
   getAllAuctions,
   getAuctionById,
   createAuction,
   updateAuction,
   deleteAuction,
+  updateCurrentPrice,
+  finishAuction
 };
