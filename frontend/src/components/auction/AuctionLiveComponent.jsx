@@ -1,4 +1,3 @@
-// src/components/AuctionLive.jsx
 import { useEffect, useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import { io } from 'socket.io-client';
@@ -59,7 +58,7 @@ const AuctionLiveComponent = ({ auctionId, currentPrice, onNewPrice, onAuctionEn
         <>
             <p><strong>Tiempo restante:</strong> {timeLeft ?? 'Esperando...'}</p>
 
-            {!inAuction && timeLeft === null && (
+            {!inAuction && (
                 <Button variant="success" onClick={startAuction}>
                     Participar
                 </Button>
@@ -74,10 +73,15 @@ const AuctionLiveComponent = ({ auctionId, currentPrice, onNewPrice, onAuctionEn
                         value={bidAmount}
                         onChange={(e) => setBidAmount(e.target.value)}
                     />
+                    <p  style={{ fontSize: '0.8rem', color: 'gray', marginTop: '1rem' }} >Ingresa un monto ideal (El monto debe ser completo)</p>
                     <Button variant="primary" onClick={handleBid}>
                         Pujar
                     </Button>
                 </>
+            )}
+
+            {inAuction && timeLeft === 0 && (
+                <Alert variant="info">La subasta ha terminado.</Alert>
             )}
 
             {messages.length > 0 && (

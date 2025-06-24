@@ -12,7 +12,7 @@ const RoutesIndex = () => {
     const {isAuth} = useAuthContext(); // Consumir el contexto de autenticación
     return (
         <Routes>
-            <Route path='/' element= {<Home/>}/>
+            <Route path='/' element= {<SignUp/>}/>
             <Route path='/SignUp' element= {<SignUp/>}/>
             <Route path='/Login' element = {<Login/>}/>
             <Route path='/subasta' element = {isAuth ? <Auction/> : <Login/>}/>

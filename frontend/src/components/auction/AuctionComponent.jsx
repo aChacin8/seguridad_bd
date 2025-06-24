@@ -47,7 +47,7 @@ const AuctionComponent = () => {
             <Card.Text>
               <strong>Precio actual:</strong> ${auction.current_price}
             </Card.Text>
-            <Button variant="primary" onClick={() => navigate(`/subasta/${auction.id_auctions}`) }>
+            <Button variant="primary" onClick={() => navigate(`/perfil`) }>
               Entrar a Subasta
             </Button>
           </Card.Body>
